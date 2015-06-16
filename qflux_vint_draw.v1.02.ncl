@@ -158,3 +158,4 @@ begin
 	delete(wind)
 end
 ; Haha, I am a new line
+; Staging area or long-term storage?
