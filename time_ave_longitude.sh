@@ -3,7 +3,7 @@
 # 	Do time averaging on every month and concatenate them together
 # Histroy:
 # 	2015/9/17 MeteoBoy4 First release
-#	2015/9/26 MeteoBoy4 Add the whole directory making, averaging, hovmuleer ready, flooding and drought analysis
+#	2015/9/26 MeteoBoy4 Add the whole directory making, averaging, hovmuller ready, flooding and drought analysis
 #			    into a single bash script
 
 PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
