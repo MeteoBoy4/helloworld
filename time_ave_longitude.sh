@@ -33,29 +33,29 @@ ncrcat -O ??.nc climon.nc
 echo -e "Data have been averaged on seasonal cycle!"
 
 #Make the data fit for hovmueller plot(time vs longitude)
-ncwa  -d latitude,10.,20. -a latitude climon.nc climon_aveocean.nc
-ncwa  -d latitude,27.5,37.5 -a latitude climon.nc climon_aveplateau.nc
+ncwa -O -d latitude,10.,20. -a latitude climon.nc climon_aveocean.nc
+ncwa -O -d latitude,27.5,37.5 -a latitude climon.nc climon_aveplateau.nc
 echo -e "Hovmueller Ready!"
 
 #Do the same things for flooding years
-mkdir ./flood
+[ -e ./flood ]||mkdir ./flood
 ncks -O -d time,'1996-01-01','1996-12-01' $1 ./flood/1996.nc
 ncks -O -d time,'1998-01-01','1998-12-01' $1 ./flood/1998.nc
 ncks -O -d time,'1999-01-01','1999-12-01' $1 ./flood/1999.nc
-nces ./flood/1996.nc ./flood/1998.nc ./flood/1999.nc ./flood/flood.nc
+nces -O ./flood/1996.nc ./flood/1998.nc ./flood/1999.nc ./flood/flood.nc
 ncbo -O ./flood/flood.nc climon.nc ./flood/flood_anomlies.nc
 ncwa -O -d latitude,27.5,37.5 -a latitude ./flood/flood_anomlies.nc ./flood/flood_anomlies_aveplateau.nc
 ncwa -O -d latitude,10.,20. -a latitude ./flood/flood_anomlies.nc ./flood/flood_anomlies_aveocean.nc
 echo -e "Flooding years Ready!"
 
 #Do the same things for drought years
-mkdir ./drought
+[ -e ./drought ]||mkdir ./drought
 ncks -O -d time,'1985-01-01','1985-12-01' $1 ./drought/1985.nc
 ncks -O -d time,'1988-01-01','1988-12-01' $1 ./drought/1988.nc
 ncks -O -d time,'1990-01-01','1990-12-01' $1 ./drought/1990.nc
 ncks -O -d time,'2001-01-01','2001-12-01' $1 ./drought/2001.nc
 ncks -O -d time,'2013-01-01','2013-12-01' $1 ./drought/2013.nc
-nces ./drought/1985.nc ./drought/1988.nc ./drought/1990.nc ./drought/2001.nc ./drought/2013.nc ./drought/drought.nc
+nces -O ./drought/1985.nc ./drought/1988.nc ./drought/1990.nc ./drought/2001.nc ./drought/2013.nc ./drought/drought.nc
 ncbo -O ./drought/drought.nc climon.nc ./drought/drought_anomlies.nc
 ncwa -O -d latitude,27.5,37.5 -a latitude ./drought/drought_anomlies.nc ./drought/drought_anomlies_aveplateau.nc
 ncwa -O -d latitude,10.,20. -a latitude ./drought/drought_anomlies.nc ./drought/drought_anomlies_aveocean.nc
