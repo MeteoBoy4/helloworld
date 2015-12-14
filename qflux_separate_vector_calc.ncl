@@ -11,11 +11,11 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/contributed.ncl"
 begin
 ;-------Open file to read	
 	dir="/run/media/MeteoBoy4/Data/MData/ERA-Interim"
-	system("rm -f "+dir+"/2013/Qflux/Vertical_Inte/Calculation/vint_qflux_sepa_vector.nc")
-	efile=addfile(dir+"/2013/Qflux/Vertical_Inte/eastward.nc","r")
-	nfile=addfile(dir+"/2013/Qflux/Vertical_Inte/northward.nc","r")
-	qu=short2flt(efile->qu(:,::-1,:))
-	qv=short2flt(nfile->qv(:,::-1,:))
+	system("rm -f "+dir+"/1985-2014_ALEV/Monthly/Calculation/Qflux_500hpa/vint_qflux_sepa_vector.nc")
+	efile=addfile(dir+"/1985-2014_ALEV/Monthly/Calculation/Qflux_500hpa/qu.nc","r")
+	nfile=addfile(dir+"/1985-2014_ALEV/Monthly/Calculation/Qflux_500hpa/qv.nc","r")
+	qu=efile->qu(:,0,::-1,:)  ;Pay attentions to the dimensions !
+	qv=nfile->qv(:,0,::-1,:)
 	dims=dimsizes(qu)
 	ntime=dims(0)
 	nlat=dims(1)
@@ -23,26 +23,32 @@ begin
 	latitude=qu&latitude
 	longitude=qu&longitude
 	time=qu&time
+	printVarSummary(qu)
+	print("Ready to calculate!")
 
 ;--------Calculate the divergent and rotational wind components
 	div=uv2dvF_Wrap(qu,qv)
+	print("Divergence Done!")
 	uvd=dv2uvF_Wrap(div)
+	print("Divergent Components Done!")
 
 	uvr=uvd
 	uvr(0,:,:,:)=qu-uvd(0,:,:,:)
 	uvr(1,:,:,:)=qv-uvd(1,:,:,:) 
+	print("Rotational Components Derived!")
 	
 	sfvp=uvd
 	sfvp=uv2sfvpF(qu,qv)
+	print("Functions Done!")
 
 	delete(qu)
 	delete(qv)
 
 ;-------Write the resulats into netCDF file
 	system("free")
-	fout=addfile(dir+"/2013/Qflux/Vertical_Inte/Calculation/vint_qflux_sepa_vector.nc","c")
+	fout=addfile(dir+"/1985-2014_ALEV/Monthly/Calculation/Qflux_500hpa/vint_qflux_sepa_vector.nc","c")
 	fileAtt=True
-	fileAtt@title="The divergent and rotational wind components of vertical integration of qflux in 2013"
+	fileAtt@title="The divergent and rotational wind components of vertical integration of qflux on 500hpa"
 	fileAtt@Conventions="None"
 	fileAtt@creation_date=systemfunc("date")
 	setfileoption(fout,"DefineMode",True)
@@ -79,6 +85,7 @@ begin
 	fout->rov=(/uvr(1,:,:,:)/)
 	fout->sf=(/sfvp(0,:,:,:)/)
 	fout->vp=(/sfvp(1,:,:,:)/)
+	print("Written to netCDF format!")
 
 	delete(div)
 	delete(uvd)
