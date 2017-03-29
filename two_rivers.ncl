@@ -140,6 +140,8 @@ begin
      resp@gsLineDashPattern = 0           ; solid line
   end if
 
-  plot@dumhP=gsn_add_polyline(wks,plot,xpthh,ypthh,resp)
-  plot@dumcP=gsn_add_polyline(wks,plot,xptcj,yptcj,resp)
+  dumhP=unique_string("dumh")
+  dumcP=unique_string("dumc")
+  plot@$dumhP$=gsn_add_polyline(wks,plot,xpthh,ypthh,resp)
+  plot@$dumcP$=gsn_add_polyline(wks,plot,xptcj,yptcj,resp)
 end
