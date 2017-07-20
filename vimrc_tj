@@ -1,0 +1,28 @@
+set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+set termencoding=utf-8
+set encoding=utf-8
+set nu
+set nocompatible
+set backspace=indent,eol,start
+au BufRead,BufNewFile *.ncl set filetype=ncl
+au! Syntax newlang source $VIM/ncl.vim 
+set complete-=k complete+=k " Add dictionary search (as per dictionary option)
+set wildmode=list:full
+set wildmenu
+au BufRead,BufNewFile *.ncl set dictionary=~/.vim/dictionary/ncl.dic
+let fortran_have_tabs=1
+set tabstop=4
+"set cindent 
+"set autoindent
+"set cindent shiftwidth=6
+"set autoindent shiftwidth=6
+let fortran_fold=1
+set foldmethod=syntax
+set foldlevelstart=99
+syntax enable
+syntax on
+set showmatch
+set wrap
+set hlsearch
+au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif  
+highlight Search term=reverse ctermfg=0 ctermbg=3

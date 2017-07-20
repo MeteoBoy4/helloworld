@@ -1,0 +1,62 @@
+"normal settings
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"解决linux下vim汉语乱码
+set fileencodings=utf-8,gbk,gb18030
+"标号
+set nu
+"set the compiler
+"set makeprg=ifort\ %
+"ncl syntax
+au BufRead,BufNewFile *.ncl set filetype=ncl
+au! Syntax newlang source $VIM/ncl.vim 
+"开启VIM后，自动使用NeoComplete
+let g:NeoComplCache_EnableAtStartup = 1
+let g:neocomplcache_enable_auto_select = 1 
+let g:acp_enableAtStartup = 1
+let g:SuperTabDefaultCompletionType="<C-X><C-U>"
+let g:NeoComplCache_DisableAutoComplete = 0
+set tags+=/home/rex/.vim/syntax/tags
+"hotkey
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <F2> :up<CR>
+map <F3> :up<CR>:q<CR>       " 存档后离开
+map <F4> :q!<CR>        " 不存档离开
+map <F5> :make<CR>
+"map <F5> :bp<CR>        " 前一个  buffer 档案
+"map <F6> :bn<CR>        " 下一个  buffer 档案
+" 单键 <F7> 控制 syntax  on/off。倒斜线是  Vim script 的折行标志
+" 按一次  <F7> 是 on  的话，再按一次则是  off，再按一次又是  on。
+" 原因是有时候颜色太多会妨碍阅读。
+map <F7> :if exists("syntax_on") <BAR>
+\   syntax off  <BAR><CR>
+\ else<BAR>
+\   syntax  enable  <BAR>
+\ endif <CR>
+" 按 F8  会在 searching highlight  及非 highlight 间切换
+map <F8> :set hls!<BAR>set  hls?<CR> 
+" Toggle   on/off  paste mode
+map <F9> :set paste!<BAr>set   paste?<CR>
+set  pastetoggle=<F9>
+"if has('gui_running') && has("win32")
+"    map <F10> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+"endif
+"imap <F10> :call libcallnr("gvimfullscreen.dll", "ToggleFullScreen", 0)<CR>
+"map <F10>  <ESC>:read   !date<CR>         " 插入日期
+map <F10> <Esc>:!source /opt/intel/bin/ifortvars.sh ia32<CR>
+map <F11>  :%!xxd<CR>             " 呼叫 xxd  做 16  进位显示
+map <F12>  :%!xxd   -r<CR>        " 回复正常显示
+
+
+
+"Plugin-----Taglist(p.s.winmanager)
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let g:winManagerWindowLayout='FileExplorer|TagList'
+nmap wm :WMToggle<cr>
+"Plugin-----Minibufexplore
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"用<C-h,j,k,l>切换到上下左右的窗口中去
+let g:miniBufExplMapWindowNavVim = 1
+"2015年05月18日add
+"set mouse=a
